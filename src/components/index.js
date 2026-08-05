@@ -1,8 +1,9 @@
-import Header from "./Header/header";
+import HeaderComponent from "./Header/Header";
 import Footer from "./Footer/footer";
 import Container from "./container/Container";
 import Logo from "./Logo";
 import LogoutBtn from "./Header/LogoutBtn";
+import selectButton from "./selectButton";
 import Button from "./button";
 import Input from "./input";
 import RTE from "./RTE";
@@ -12,7 +13,7 @@ import PostForm from "./post-form/PostForm";
 import PostCard from "./PostCard";
 import AuthLayout from "./AuthLayout";
 export {
-  Header,
+  HeaderComponent,
   Footer,
   Container,
   Logo,
@@ -25,4 +26,5 @@ export {
   PostForm,
   PostCard,
   AuthLayout,
+  selectButton,
 };

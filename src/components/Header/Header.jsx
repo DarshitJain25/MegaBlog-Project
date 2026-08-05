@@ -1,9 +1,9 @@
 import React from "react";
-import { Header, Footer, Container, Logo, LogoutBtn } from "../index";
+import { Container, Logo, LogoutBtn } from "../index";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-function Header() {
+
+function HeaderComponent() {
   const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
 
@@ -59,10 +59,10 @@ function Header() {
               </li>
             )}
           </ul>
-        </nav> 
+        </nav>
       </Container>
     </header>
   );
 }
 
-export default Header;
+export default HeaderComponent;

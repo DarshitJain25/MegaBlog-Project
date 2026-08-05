@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, Select, RTE } from "../index";
+import { Button, Input, selectButton, RTE } from "../index";
 import { useDispatch } from "react-redux";
 import dbService from "../../appwrite/conf";
-import { useNavigate } from "react-routet-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function PostForm({ post }) {
@@ -113,7 +113,7 @@ function PostForm({ post }) {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
-        {post && ( 
+        {post && (
           <div className="w-full mb-4">
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
@@ -122,7 +122,7 @@ function PostForm({ post }) {
             />
           </div>
         )}
-        <Select
+        <selectButton
           options={["active", "inactive"]}
           label="Status"
           className="mb-4"

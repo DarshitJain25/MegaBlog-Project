@@ -3,7 +3,7 @@ import Footer from "./Footer/footer";
 import Container from "./container/Container";
 import Logo from "./Logo";
 import LogoutBtn from "./Header/LogoutBtn";
-import selectButton from "./selectButton";
+import SelectButton from "./SelectButton";
 import Button from "./button";
 import Input from "./input";
 import RTE from "./RTE";
@@ -26,5 +26,5 @@ export {
   PostForm,
   PostCard,
   AuthLayout,
-  selectButton,
+  SelectButton,
 };

@@ -17,7 +17,7 @@ function HeaderComponent() {
     {
       name: "Signup",
       slug: "/signup",
-      status: !authStatus,
+      active: !authStatus,
     },
     {
       name: "All Posts",

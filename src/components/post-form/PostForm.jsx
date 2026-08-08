@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, selectButton, RTE } from "../index";
+import { Button, Input, SelectButton, RTE } from "../index";
 import { useDispatch } from "react-redux";
 import dbService from "../../appwrite/conf";
 import { useNavigate } from "react-router-dom";
@@ -17,21 +17,24 @@ function PostForm({ post }) {
       },
     });
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.user.userData);
+  const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
+    console.log("This is the submit function",data);
     if (post) {
-      const file = data.image[0] ? dbService.uploadFile(data.image[0]) : null;
+      const file = data.image[0]
+        ? await dbService.uploadFile(data.image[0])
+        : null;
 
       if (file) {
-        dbService.deleteFile(post.featuredImage);
+        await dbService.deleteFile(post.featuredImage);
       }
-      const dbPost = dbService.updatePost(post.$id, {
+      const dbPost = await dbService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
       if (dbPost) {
-        navigate("/post/${dbPost.$id}");
+        navigate(`/post/${dbPost.$id}`);
       }
     } else {
       const file = await dbService.uploadFile(data.image[0]);
@@ -50,15 +53,15 @@ function PostForm({ post }) {
     }
   };
 
-  const slugTranform = useCallback((value) => {
+  const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
       return value
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
-      return "";
     }
+    return "";
   }, []);
 
   useEffect(() => {
@@ -66,7 +69,7 @@ function PostForm({ post }) {
       if (name === "title") {
         setValue(
           "slug",
-          slugTranform(value.title, {
+          slugTransform(value.title, {
             shouldValidate: true,
           }),
         );
@@ -76,7 +79,7 @@ function PostForm({ post }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [watch, slugTranform, setValue]);
+  }, [watch, slugTransform, setValue]);
 
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -122,7 +125,7 @@ function PostForm({ post }) {
             />
           </div>
         )}
-        <selectButton
+        <SelectButton
           options={["active", "inactive"]}
           label="Status"
           className="mb-4"

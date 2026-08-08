@@ -20,25 +20,30 @@ function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
-    console.log("This is the submit function",data);
+    // console.log("This is the submit function",data);
+    console.log("Submit button", data);
     if (post) {
       const file = data.image[0]
         ? await dbService.uploadFile(data.image[0])
         : null;
+      console.log("1. File uploaded:", file);
 
       if (file) {
-        await dbService.deleteFile(post.featuredImage);
+        dbService.deleteFile(post.featuredImage);
       }
+      console.log("2. File deleted:", file);
       const dbPost = await dbService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
+
+      console.log("3. Post updated:", dbPost);
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
       const file = await dbService.uploadFile(data.image[0]);
-
+      console.log("1. File uploaded:", file);
       if (file) {
         const fileId = file.$id;
         data.featuredImage = fileId;
@@ -46,6 +51,7 @@ function PostForm({ post }) {
           ...data,
           userId: userData.$id,
         });
+        console.log("1. Post created:", dbPost);
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
         }
@@ -67,12 +73,9 @@ function PostForm({ post }) {
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
-        setValue(
-          "slug",
-          slugTransform(value.title, {
-            shouldValidate: true,
-          }),
-        );
+        setValue("slug", slugTransform(value.title), {
+          shouldValidate: true,
+        });
       }
     });
 
@@ -119,7 +122,7 @@ function PostForm({ post }) {
         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteService.getFilePreview(post.featuredImage)}
+              src={dbService.filePreview(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
             />

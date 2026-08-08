@@ -2,6 +2,12 @@ import React from "react";
 import dbService from "../appwrite/conf";
 import { Link } from "react-router-dom";
 function PostCard({ $id, title, featuredImage }) {
+  console.log("featuredImage: ", featuredImage);
+
+    const imageUrl = dbService.filePreview(featuredImage);
+
+  console.log("imageUrl:", imageUrl);
+
   return (
     <Link to={`/post/${$id}`}>
       <div className="'w-full bg-gray-100 rounded-xl p-4'">
@@ -16,6 +22,7 @@ function PostCard({ $id, title, featuredImage }) {
       </div>
     </Link>
   );
+
 }
 
 export default PostCard;

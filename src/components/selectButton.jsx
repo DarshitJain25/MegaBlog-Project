@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 
-function SelectButton({ options, label, className, ...props }, ref) {
+function SelectButton({ options, label, className,ref, ...props}) {
   const id = useId();
   return (
     <div className="w-full">

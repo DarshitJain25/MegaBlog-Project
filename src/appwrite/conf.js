@@ -23,7 +23,7 @@ export class DatabaseService {
         {
           title,
           content,
-          featuredImafe,
+          featuredImage,
           status,
           userId,
         },
@@ -67,16 +67,15 @@ export class DatabaseService {
 
   async getPost(slug) {
     try {
-      await this.databases.getDocument(
+     return await this.databases.getDocument(
         conf.appwrieDatabaseId,
         conf.appwriteTableId,
         slug,
       );
-      return true;
     } catch (error) {
       console.log("Appwrite service :: getPost :: error", error);
+      return false;
     }
-    return false;
   }
 
   async getPosts(queries = [Query.equal("status", "active")]) {
@@ -98,7 +97,7 @@ export class DatabaseService {
     try {
       return await this.bucket.createFile(
         conf.appwriteBucketId,
-        ID.unique,
+        ID.unique(),
         file,
       );
     } catch (error) {

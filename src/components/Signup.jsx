@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import authService from "../appwrite/auth_service";
 import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../store/authslice";
-import { Button, Input, Logo } from "./index";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Logo from "../components/Logo";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 function Signup() {

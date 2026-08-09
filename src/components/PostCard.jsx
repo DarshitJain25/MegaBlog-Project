@@ -13,10 +13,9 @@ function PostCard({ $id, title, featuredImage }) {
       <div className="'w-full bg-gray-100 rounded-xl p-4'">
         <div className="w-full justify-center mb-4">
           <img
-            src={dbService.filePreview(featuredImage)}
+            src={imageUrl}
             alt={title}
             className="rounded-xl"
-            width={300}
           />
         </div>
         <h2 className="className='text-xl font-bold'">{title}</h2>

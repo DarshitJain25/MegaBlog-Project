@@ -118,7 +118,7 @@ export class DatabaseService {
 
   // very fast , give resource url not actual file
   filePreview(fileId) {
-    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
+    return this.bucket.getFileView(conf.appwriteBucketId, fileId);
   }
 }
 

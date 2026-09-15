@@ -1,11 +1,24 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Container, Logo, LogoutBtn } from "../index";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function HeaderComponent() {
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
   const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   const navItems = [
     { name: "Home", slug: "/", active: "true" },
@@ -60,7 +73,14 @@ function HeaderComponent() {
                 </li>
               ) : null,
             )}
-
+            <li>
+              <button
+                onClick={() => setDarkMode((prev) => !prev)}
+                className="flex h-9 w-9 items-center justify-center rounded-md border border-(--line) text-(--muted) hover:border-(--accent) hover:text-(--accent)"
+              >
+                {darkMode ? "☀" : "☾"}
+              </button>
+            </li>
             {authStatus && (
               <li>
                 <LogoutBtn />

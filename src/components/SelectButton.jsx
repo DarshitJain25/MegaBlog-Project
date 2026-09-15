@@ -1,26 +1,44 @@
 import React, { useId } from "react";
 
-function SelectButton({ options, label, className,ref, ...props}) {
+function Select({ options, label, className = "", ...props }, ref) {
   const id = useId();
+
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={id} className="">
+        <label
+          htmlFor={id}
+          className="inline-block mb-2 text-sm font-medium text-var(--ink)"
+        >
           {label}
         </label>
       )}
+
       <select
         {...props}
         id={id}
         ref={ref}
-        className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}
+        className={`
+          w-full
+          px-3.5 py-3
+          rounded-md
+          border border-var(--line)
+          bg-var(--surface)
+          text-var(--ink)
+          outline-none
+          transition-colors duration-200
+          focus:border-var(--accent)
+          ${className}
+        `}
       >
         {options?.map((option) => (
-          <option key={option} value={option}>{option}</option>
+          <option key={option} value={option}>
+            {option}
+          </option>
         ))}
       </select>
     </div>
   );
 }
 
-export default SelectButton;
+export default React.forwardRef(Select);

@@ -10,7 +10,6 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-
   color: #201d1a;
   background: #fbf7ef;
 
@@ -83,7 +82,7 @@ a {
   color: var(--ink);
 }
 
-// Article
+/* Article */
 
 .article-body {
   font-family: "Fraunces", Georgia, "Times New Roman", serif;

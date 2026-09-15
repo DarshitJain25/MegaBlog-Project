@@ -28,62 +28,73 @@ function Login() {
     }
   };
   return (
-    <div className="flex items-center justify-center w-full">
-      <div
-        className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
-      >
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-25">
-            <Logo width="100%" />
-          </span>
-        </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">
-          Sign in to your account
-        </h2>
-        <p className="mt-2 text-center text-base text-black/60">
-          Don&apos;t have any account?&nbsp;
-          <Link
-            to="/signup"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
-          >
-            Sign Up
-          </Link>
-        </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-
-        <form onSubmit={handleSubmit(login)} className="mt -8">
-          <div className="space-y-5">
-            <Input
-              label="Email: "
-              placeholder="Enter your email"
-              type="email"
-              {...register("email", {
-                required: true,
-                validate: {
-                  matchPattern: (value) =>
-                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                    "Email address must be a valid address",
-                },
-              })}
-            />
-
-            <Input
-              label="Password: "
-              placeholder="Enter your password"
-              type="password"
-              {...register("password", {
-                required: true,
-                maxLength: 20,
-                validate: (value) =>
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value) ||
-                  "Enter a valid Password",
-              })}
-            />
-            <Button type="submit" className="w-full">
-              Sign in
-            </Button>
+    <div className="flex w-full items-center justify-center px-5">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
+          <div className="mb-5 flex justify-center">
+            <Logo />
           </div>
-        </form>
+
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-(--accent)">
+            Welcome back
+          </p>
+
+          <h2 className="editorial-serif text-4xl font-semibold tracking-[-0.03em] text-(--ink)">
+            Sign in to MegaBlog
+          </h2>
+
+          <p className="mt-3 text-sm text-(--muted)">
+            Don&apos;t have an account?{" "}
+            <Link
+              to="/signup"
+              className="font-medium text-(--accent) transition-colors hover:underline"
+            >
+              Sign up
+            </Link>
+          </p>
+        </div>
+
+        <div className="rounded-md border border-(--line)bg-(--surface) p-6 sm:p-8">
+          {error && (
+            <p className="mb-5 text-center text-sm text-red-600">{error}</p>
+          )}
+
+          <form onSubmit={handleSubmit(login)}>
+            <div className="space-y-5">
+              <Input
+                label="Email"
+                placeholder="Enter your email"
+                type="email"
+                {...register("email", {
+                  required: true,
+                  validate: {
+                    matchPattern: (value) =>
+                      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                        value,
+                      ) || "Email address must be a valid address",
+                  },
+                })}
+              />
+
+              <Input
+                label="Password"
+                placeholder="Enter your password"
+                type="password"
+                {...register("password", {
+                  required: true,
+                  maxLength: 20,
+                  validate: (value) =>
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value) ||
+                    "Enter a valid Password",
+                })}
+              />
+
+              <Button type="submit" className="w-full">
+                Sign in
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

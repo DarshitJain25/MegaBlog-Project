@@ -9,16 +9,29 @@ function PostCard({ $id, title, featuredImage }) {
   console.log("imageUrl:", imageUrl);
 
   return (
-    <Link to={`/post/${$id}`}>
-      <div className = "w-full bg-slate-500 rounded-xl p-4">
-        <div className="w-full justify-center mb-4 h-48 overflow-hidden">
+    <Link to={`/post/${$id}`} className="group block h-full">
+      <div className="h-full overflow-hidden rounded-md border border-(--line) bg-(--surface) transition-colors duration-200 hover:border-(--accent)">
+        <div className="aspect-16/10 w-full overflow-hidden bg-(--line)">
           <img
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover rounded-xl"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           />
         </div>
-        <h2 className="text-xl font-bold">{title}</h2>
+
+        <div className="p-5 sm:p-6">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-(--accent)">
+            Story
+          </p>
+
+          <h2 className="editorial-serif text-xl sm:text-2xl font-semibold leading-snug tracking-[-0.02em] text-(--ink) transition-colors duration-200 group-hover:text-(--accent)">
+            {title}
+          </h2>
+
+          <p className="mt-4 text-sm font-medium text-(--muted)">
+            Read story →
+          </p>
+        </div>
       </div>
     </Link>
   );

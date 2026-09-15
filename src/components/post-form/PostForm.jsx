@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {Button, Input, RTE, SelectButton} from "..";
+import { Button, Input, RTE, SelectButton } from "..";
 import { useDispatch } from "react-redux";
 import dbService from "../../appwrite/conf";
 import { useNavigate } from "react-router-dom";
@@ -85,62 +85,104 @@ function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
-        <Input
-          label="Title :"
-          placeholder="Title"
-          className="mb-4"
-          {...register("title", { required: true })}
-        />
-        <Input
-          label="Slug :"
-          placeholder="Slug"
-          className="mb-4"
-          {...register("slug", { required: true })}
-          onInput={(e) => {
-            setValue("slug", slugTransform(e.currentTarget.value), {
-              shouldValidate: true,
-            });
-          }}
-        />
-        <RTE
-          label="Content :"
-          name="content"
-          control={control}
-          defaultValue={getValues("content")}
-        />
-      </div>
-      <div className="w-1/3 px-2">
-        <Input
-          label="Featured Image :"
-          type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: !post })}
-        />
-        {post && (
-          <div className="w-full mb-4">
-            <img
-              src={dbService.filePreview(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
+    <form onSubmit={handleSubmit(submit)} className="w-full">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        {/* LEFT SIDE */}
+        <div className="space-y-6">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-(--accent)">
+              Story details
+            </p>
+
+            <h1 className="editorial-serif text-3xl font-semibold tracking-[-0.03em] text-(--ink)">
+              {post ? "Edit your story" : "Write a new story"}
+            </h1>
+
+            <p className="mt-2 text-sm text-(--muted)">
+              Give your story a title and start writing below.
+            </p>
+          </div>
+
+          <div className="border-t border-(--line) pt-6">
+            <Input
+              label="Title :"
+              placeholder="Title"
+              {...register("title", {
+                required: true,
+              })}
             />
           </div>
-        )}
-        <SelectButton
-          options={["active", "inactive"]}
-          label="Status"
-          className="mb-4"
-          {...register("status", { required: true })}
-        />
-        <Button
-          type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "Update" : "Submit"}
-        </Button>
+
+          <Input
+            label="Slug :"
+            placeholder="Slug"
+            {...register("slug", {
+              required: true,
+            })}
+            onInput={(e) => {
+              setValue("slug", slugTransform(e.currentTarget.value), {
+                shouldValidate: true,
+              });
+            }}
+          />
+
+          <RTE
+            label="Content :"
+            name="content"
+            control={control}
+            defaultValue={getValues("content")}
+          />
+        </div>
+
+        {/* RIGHT SIDE */}
+        <aside className="space-y-5">
+          <div className="rounded-md border border-(--line) bg-(--surface) p-5">
+            <h2 className="editorial-serif mb-4 text-xl font-semibold text-(--ink)">
+              Featured image
+            </h2>
+
+            <Input
+              label="Featured Image :"
+              type="file"
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              {...register("image", {
+                required: !post,
+              })}
+            />
+
+            {post && (
+              <div className="mt-4 w-full overflow-hidden rounded-md border border-(--line)">
+                <img
+                  src={dbService.filePreview(post.featuredImage)}
+                  alt={post.title}
+                  className="w-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-md border border-(--line) bg-(--surface) p-5">
+            <h2 className="editorial-serif mb-4 text-xl font-semibold text-(--ink)">
+              Publishing
+            </h2>
+
+            <SelectButton
+              options={["active", "inactive"]}
+              label="Status"
+              {...register("status", {
+                required: true,
+              })}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            bgColor={post ? "bg-green-500" : undefined}
+            className="w-full"
+          >
+            {post ? "Update" : "Submit"}
+          </Button>
+        </aside>
       </div>
     </form>
   );

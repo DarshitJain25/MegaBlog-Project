@@ -33,33 +33,47 @@ export default function Post() {
   };
 
   return post ? (
-    <div className="py-8">
+    <div className="py-10 sm:py-14">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-          <img
-            src={dbService.filePreview(post.featuredImage)}
-            alt={post.title}
-            className="rounded-xl"
-            width={300}
-          />
+        <article className="mx-auto max-w-3xl">
+          <div className="mb-8">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-(--accent)">
+              Story
+            </p>
 
-          {isAuthor && (
-            <div className="absolute right-6 top-6">
-              <Link to={`/edit-post/${post.$id}`}>
-                <Button bgColor="bg-green-500" className="mr-3">
-                  Edit
+            <h1 className="editorial-serif text-4xl sm:text-5xl font-semibold leading-tight tracking-[-0.03em] text-(--ink)">
+              {post.title}
+            </h1>
+          </div>
+
+          <div className="relative mb-10 overflow-hidden rounded-md border border-(--line)">
+            <img
+              src={dbService.filePreview(post.featuredImage)}
+              alt={post.title}
+              className="w-full object-cover"
+            />
+
+            {isAuthor && (
+              <div className="absolute right-4 top-4 flex gap-2">
+                <Link to={`/edit-post/${post.$id}`}>
+                  <Button bgColor="bg-[var(--accent)]" className="text-sm">
+                    Edit
+                  </Button>
+                </Link>
+
+                <Button
+                  bgColor="bg-red-600"
+                  className="text-sm"
+                  onClick={deletePost}
+                >
+                  Delete
                 </Button>
-              </Link>
-              <Button bgColor="bg-red-500" onClick={deletePost}>
-                Delete
-              </Button>
-            </div>
-          )}
-        </div>
-        <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
-        </div>
-        <div className="browser-css">{parse(post.content)}</div>
+              </div>
+            )}
+          </div>
+
+          <div className="article-body">{parse(post.content)}</div>
+        </article>
       </Container>
     </div>
   ) : null;
